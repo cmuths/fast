@@ -1,10 +1,30 @@
+//// 注意: 整个项目proto定义只有这一个文件
+
+//--------------------------------
+//--------  用户存储
+//--------------------------------
+
+// 用户数据
+message User
+{
+    optional uint32 account = 1;
+    // TODO
+}
+
+
+
+
+
+
+//--------------------------------
+//--------  客户端协议
+//--------------------------------
 message Head
 {
     optional uint32 result = 1;   // 错误码， 0标识正常
     optional string errmsg = 2;   // 错误描述信息
 }
 
-//--------------------------------
 // 登陆请求, 第一条协议
 message LoginReq
 {
@@ -19,7 +39,6 @@ message LoginRsp
     optional uint32 account = 2;    // [sdkid+username] 对应唯一的账号id
 }
 
-//--------------------------------
 // 获取用户数据
 message GetUserReq
 {
@@ -29,4 +48,5 @@ message GetUserReq
 message GetUserRsp
 {
     optional Head head = 1;
+    optional User user = 2;
 }
