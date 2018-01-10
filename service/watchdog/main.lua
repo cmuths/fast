@@ -19,10 +19,15 @@ sock_handler["LoginReq"] = function (fd, msg)
     local account = 100
 
 	agents[fd] = skynet.newservice("agent")
-	skynet.call(agents[fd], "lua", "start", gate, skynet.self(), fd, account)
-
-	SOCKET.send(fd, "LoginRsp", {account = account})
-	printf("login success, account = %d", account)
+	local succ, errmsg = skynet.call(agents[fd], "lua", "start", gate, skynet.self(), fd, account)
+    local resp = {account = account, head = {}}
+    if not succ then
+        resp.head.result = 1
+        resp.head.errmsg = errmsg
+    else
+        printf("login success, account = %d", account)
+    end
+	SOCKET.send(fd, "LoginRsp", resp)
 end
 
 ------------------------ socket消息开始 -----------------------------

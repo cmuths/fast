@@ -2,6 +2,7 @@ local skynet = require "skynet"
 local redis = require "skynet.db.redis"
 local baseobj =  require "base.baseobj"
 
+
 function NewGameDbObj(...)
     return CGameDb:New(...)
 end
@@ -28,12 +29,25 @@ function CGameDb:Init(mConfig)
     self.m_oClient = oClient
 end
 
+local function make_key(prefix, account)
+    return string.format("%s:%u", prefix, account)
+end
 
-function CGameDb:Get(key)
+-- 用户数据最大的字节数
+local MAX_USER_LEN = 10*1024
+
+-- 获取用户数据
+function CGameDb:GetUser(account)
+    local key = make_key("user", account)
     local result = self.m_oClient:get(key)
+    if result and #result > MAX_USER_LEN then
+        return nil, "用户数据超过上限"
+    end
     return result
 end
 
-function CGameDb:Set(key, value)
+-- 保存用户数据
+function CGameDb:SetUser(account, value)
+    local key = make_key("user", account)
     assert(self.m_oClient:set(key, value))
 end

@@ -90,4 +90,4 @@ cleanall:
 	cd 3rd/pbc && make clean
 
 proto:
-	protoc --descriptor_set_out  ${BUILD_PROTO_DIR}/client.pb proto/client.proto
+	protoc --descriptor_set_out  ${BUILD_PROTO_DIR}/all.pb proto/all.proto

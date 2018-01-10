@@ -95,7 +95,7 @@ end
 
 function main(ip, port)
     -- TODO
-	protobuf.register_file("./build/proto/client.pb")
+	protobuf.register_file("./build/proto/all.pb")
 
 	fd = assert(socket.connect(ip, port))
 

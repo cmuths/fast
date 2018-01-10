@@ -12,8 +12,7 @@ end
 
 -- CGameDb 代理
 function CMD.dbproxy(func, ...)
-    local ret =  global.oGameDb[func](global.oGameDb, ...)
-    return ret
+    return global.oGameDb[func](global.oGameDb, ...)
 end
 
 skynet.dispatch("lua", function (session, address, command, ...)

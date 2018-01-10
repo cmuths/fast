@@ -18,8 +18,8 @@ preload = root.."lualib/base/preload.lua"
 ------------------ 游戏配置目录 ------------
 sharedata_dir = root .. "daobiao/"
 
------------------ 客户端协议 ---------------
-proto_dir = outdir .. "proto"
+----------------- 定义了客户端协议和存储格式  ---------------
+proto_file = outdir .. "proto/all.pb"
 
 -----------------  管理工具, 支持热更新  --------------
 dictator_port = 7002

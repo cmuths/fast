@@ -14,4 +14,14 @@ function M.unpack(data)
 	return name, msg
 end
 
+function M.decode(name, buf)
+	local msg  = skynet.call(".pbc", "lua", "decode", name, buf)
+    return msg
+end
+
+function M.encode(name, msg)
+	local buf = skynet.call(".pbc", "lua", "encode", name, msg)
+    return buf
+end
+
 return M

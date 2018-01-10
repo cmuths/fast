@@ -10,22 +10,18 @@ local function reload_proto()
     message_names = {}
     package.loaded["protobuf"] = nil
     protobuf = require "protobuf"
-
-    local dirname = skynet.getenv("proto_dir")
-    local paths = path.listdir(dirname)
-	for _, p in ipairs(paths) do
-        print("register proto:", p)
-        local fp = io.open(p, "rb")
-        local buffer = fp:read "*a"
-        fp:close()
-		protobuf.register(buffer)
-        local t = protobuf.decode("google.protobuf.FileDescriptorSet", buffer)
-        local proto = t.file[1]
-        for _, v in ipairs(proto.message_type) do
-            message_names[v.name] = true
-            --print("message_name: ", v.name)
-        end
-	end
+    local p = skynet.getenv("proto_file")
+    print("register proto:", p)
+    local fp = assert(io.open(p, "rb"))
+    local buffer = fp:read "*a"
+    fp:close()
+    protobuf.register(buffer)
+    local t = protobuf.decode("google.protobuf.FileDescriptorSet", buffer)
+    local proto = t.file[1]
+    for _, v in ipairs(proto.message_type) do
+        message_names[v.name] = true
+        --print("message_name: ", v.name)
+    end
 end
 
 local CMD = {}

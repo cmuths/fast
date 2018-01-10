@@ -24,11 +24,15 @@ function CMD.start(gate, watchdog, fd, account)
     global.gate = gate
     global.watchdog = watchdog
     global.oAgentObj = agentobj.NewAgentObj(fd, account)
-    global.oAgentObj:LoadPlayer()
+    local succ, errmsg = global.oAgentObj:LoadPlayer()
+    if not succ then
+        return false, errmsg
+    end
 
     -- 通知gate 接收客户端数据
 	skynet.call(gate, "lua", "forward", fd)
     print("agent start")
+    return true
 end
 
 function CMD.disconnect()
